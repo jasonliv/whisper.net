@@ -3,6 +3,9 @@ CMAKE_PARAMETERS=-DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 COREML_SUPPORT=$(CMAKE_PARAMETERS) -DWHISPER_COREML=ON -DWHISPER_COREML_ALLOW_FALLBACK=ON
 AVX_SUPPORT=-DGGML_AVX=ON -DGGML_AVX2=ON -DGGML_FMA=ON -DGGML_F16C=ON
 NOAVX_SUPPORT=-DGGML_AVX=OFF -DGGML_AVX2=OFF -DGGML_FMA=OFF -DGGML_F16C=OFF
+# Custom fork build: CUDA arch list + flags matching the local Windows build (requires CUDA >= 12.8 for 120a/Blackwell)
+CUDA_ARCH=75-real;80-real;86-real;89-real;90-real;90-virtual;120a-real;120a-virtual
+CUDA_SUPPORT=-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES="$(CUDA_ARCH)" -DGGML_CUDA_COMPRESSION_MODE=size
 NDK := $(if $(strip $(NDK_PATH)),$(NDK_PATH),$(shell test -d $(HOME)/Library/Developer/Xamarin/android-sdk-macosx/ndk-bundle && echo $(HOME)/Library/Developer/Xamarin/android-sdk-macosx/ndk-bundle || echo ""))
 
 nuget:
@@ -102,7 +105,7 @@ linux_arm:
 
 linux_x64_cuda:
 	rm -rf build/linux-x64-cuda
-	cmake -S . -B build/linux-x64-cuda -DCMAKE_C_COMPILER=x86_64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=x86_64-linux-gnu-g++ -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DGGML_CUDA=ON $(AVX_SUPPORT)
+	cmake -S . -B build/linux-x64-cuda -DCMAKE_C_COMPILER=x86_64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=x86_64-linux-gnu-g++ -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 $(CUDA_SUPPORT) $(AVX_SUPPORT)
 	cmake --build build/linux-x64-cuda --config $(BUILD_TYPE)
 	mkdir -p runtimes/Whisper.net.Runtime.Cuda.Linux/linux-x64
 	echo 'LDD VERSION'
@@ -115,7 +118,7 @@ linux_x64_cuda:
 
 linux_x64_cuda12:
 	rm -rf build/linux-x64-cuda12
-	cmake -S . -B build/linux-x64-cuda12 -DCMAKE_C_COMPILER=x86_64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=x86_64-linux-gnu-g++ -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DGGML_CUDA=ON $(AVX_SUPPORT)
+	cmake -S . -B build/linux-x64-cuda12 -DCMAKE_C_COMPILER=x86_64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=x86_64-linux-gnu-g++ -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 $(CUDA_SUPPORT) $(AVX_SUPPORT)
 	cmake --build build/linux-x64-cuda12 --config $(BUILD_TYPE)
 	mkdir -p runtimes/Whisper.net.Runtime.Cuda12.Linux/linux-x64
 	echo 'LDD VERSION'

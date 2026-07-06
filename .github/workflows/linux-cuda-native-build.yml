@@ -22,7 +22,7 @@ jobs:
           - version: "13.0.1"
             target: linux_cuda
             artifact: linux-cuda-build
-          - version: "12.4.1"
+          - version: "12.8.1"
             target: linux_cuda12
             artifact: linux-cuda12-build
     steps:

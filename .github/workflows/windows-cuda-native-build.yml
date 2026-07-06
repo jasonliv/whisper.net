@@ -22,7 +22,7 @@ jobs:
           - version: "13.0.1"
             major: "13"
             artifact: windows-cuda-build
-          - version: "12.4.1"
+          - version: "12.8.1"
             major: "12"
             artifact: windows-cuda12-build
     steps:
