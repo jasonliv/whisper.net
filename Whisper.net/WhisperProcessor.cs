@@ -828,6 +828,7 @@ public sealed class WhisperProcessor : IAsyncDisposable, IDisposable
                     Id = tokenData.id,
                     TimestampId = tokenData.tid,
                     DtwTimestamp = tokenData.t_dtw,
+                    DtwEndTimestamp = tokenData.t_dtw_end,
                     VoiceLen = tokenData.vlen,
                     Probability = tokenData.p,
                     ProbabilityLog = tokenData.plog,

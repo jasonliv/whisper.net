@@ -29,6 +29,7 @@ public class WhisperToken
     public long Start;
     public long End;
     public long DtwTimestamp;
+    public long DtwEndTimestamp;
     public float VoiceLen;
     public string? Text;
 }
