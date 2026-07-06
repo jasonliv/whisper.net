@@ -312,5 +312,6 @@ internal struct WhisperTokenData
     public long t0;
     public long t1;
     public long t_dtw;
+    public long t_dtw_end;
     public float vlen;
 }
