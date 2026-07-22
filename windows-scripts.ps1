@@ -83,14 +83,16 @@ function BuildWindows() {
 
     if ($Cuda) {
         $options += "-DGGML_CUDA=1"
-        # Custom fork build: CUDA arch list + flags matching the local build (requires CUDA >= 12.8 for 120a/Blackwell)
-        $options += "-DCMAKE_CUDA_ARCHITECTURES=61-real;75-real;80-real;86-real;89-real;90-real;120a-real;120a-virtual"
         $options += "-DGGML_CUDA_COMPRESSION_MODE=size"
         if ($CudaVersion -eq "12") {
+            # Custom fork build: CUDA arch list + flags matching the local build (requires CUDA >= 12.8 for 120a/Blackwell)
+            $options += "-DCMAKE_CUDA_ARCHITECTURES=61-real;75-real;80-real;86-real;89-real;90-virtual;120a-real;120a-virtual"
             $buildDirectory += "-cuda12"
             $runtimePath += ".Cuda12.Windows"
         }
         else {
+            # Custom fork build: CUDA arch list + flags matching the local build (requires CUDA >= 12.8 for 120a/Blackwell)
+            $options += "-DCMAKE_CUDA_ARCHITECTURES=75-real;80-real;86-real;89-real;90-virtual;120a-real;120a-virtual"
             $buildDirectory += "-cuda"
             $runtimePath += ".Cuda.Windows"
         }
