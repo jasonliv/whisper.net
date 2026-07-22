@@ -4,7 +4,7 @@ COREML_SUPPORT=$(CMAKE_PARAMETERS) -DWHISPER_COREML=ON -DWHISPER_COREML_ALLOW_FA
 AVX_SUPPORT=-DGGML_AVX=ON -DGGML_AVX2=ON -DGGML_FMA=ON -DGGML_F16C=ON
 NOAVX_SUPPORT=-DGGML_AVX=OFF -DGGML_AVX2=OFF -DGGML_FMA=OFF -DGGML_F16C=OFF
 # Custom fork build: CUDA arch list + flags matching the local Windows build (requires CUDA >= 12.8 for 120a/Blackwell)
-CUDA_ARCH=75-real;80-real;86-real;89-real;90-real;90-virtual;120a-real;120a-virtual
+CUDA_ARCH=61-real;75-real;80-real;86-real;89-real;90-real;120a-real;120a-virtual
 CUDA_SUPPORT=-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES="$(CUDA_ARCH)" -DGGML_CUDA_COMPRESSION_MODE=size
 NDK := $(if $(strip $(NDK_PATH)),$(NDK_PATH),$(shell test -d $(HOME)/Library/Developer/Xamarin/android-sdk-macosx/ndk-bundle && echo $(HOME)/Library/Developer/Xamarin/android-sdk-macosx/ndk-bundle || echo ""))
 
